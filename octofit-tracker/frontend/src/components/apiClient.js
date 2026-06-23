@@ -7,9 +7,15 @@ export const apiBaseUrl = codespaceName
 
 export const isCodespaceNameConfigured = Boolean(codespaceName);
 
-export function buildCollectionUrl(resourcePath) {
-  const cleanPath = resourcePath.replace(/^\/+|\/+$/g, '');
-  return `${apiBaseUrl}/${cleanPath}/`;
+export function resolveEndpointUrl(endpointPath) {
+  const normalizedPath = String(endpointPath || '').replace(/\/+/g, '/');
+  const ensuredPath = normalizedPath.startsWith('/') ? normalizedPath : `/${normalizedPath}`;
+
+  if (isCodespaceNameConfigured) {
+    return `${apiBaseUrl}${ensuredPath.replace(/^\/api/, '')}`;
+  }
+
+  return ensuredPath;
 }
 
 export function normalizeCollectionResponse(payload) {

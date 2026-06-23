@@ -4,7 +4,7 @@ export default function Workouts() {
   return (
     <CollectionView
       title="Workouts"
-      resourcePath="workouts"
+      endpointPath="/api/workouts/"
       emptyLabel="Nog geen workout-suggesties gevonden."
     />
   );

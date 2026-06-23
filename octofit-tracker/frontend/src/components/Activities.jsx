@@ -4,7 +4,7 @@ export default function Activities() {
   return (
     <CollectionView
       title="Activities"
-      resourcePath="activities"
+      endpointPath="/api/activities/"
       emptyLabel="Nog geen activiteiten gevonden."
     />
   );

@@ -4,7 +4,7 @@ export default function Leaderboard() {
   return (
     <CollectionView
       title="Leaderboard"
-      resourcePath="leaderboard"
+      endpointPath="/api/leaderboard/"
       emptyLabel="Nog geen leaderboard-data gevonden."
     />
   );

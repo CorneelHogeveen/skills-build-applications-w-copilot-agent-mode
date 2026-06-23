@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
-  buildCollectionUrl,
   isCodespaceNameConfigured,
   normalizeCollectionResponse,
+  resolveEndpointUrl,
 } from './apiClient';
 
 function prettyValue(value) {
@@ -41,13 +41,13 @@ function guessColumns(items) {
   return ordered.concat(Array.from(keySet)).slice(0, 8);
 }
 
-export default function CollectionView({ title, resourcePath, emptyLabel }) {
+export default function CollectionView({ title, endpointPath, emptyLabel }) {
   const [items, setItems] = useState([]);
   const [pagination, setPagination] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const endpoint = useMemo(() => buildCollectionUrl(resourcePath), [resourcePath]);
+  const endpoint = useMemo(() => resolveEndpointUrl(endpointPath), [endpointPath]);
   const columns = useMemo(() => guessColumns(items), [items]);
 
   useEffect(() => {
@@ -127,7 +127,7 @@ export default function CollectionView({ title, resourcePath, emptyLabel }) {
             </thead>
             <tbody>
               {items.map((item, rowIndex) => (
-                <tr key={item?._id || `${resourcePath}-${rowIndex}`}>
+                <tr key={item?._id || `${endpointPath}-${rowIndex}`}>
                   {columns.map((column) => (
                     <td key={`${column}-${rowIndex}`}>{prettyValue(item?.[column])}</td>
                   ))}
