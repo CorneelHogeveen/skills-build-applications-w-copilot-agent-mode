@@ -28,3 +28,5 @@ The presentation tier builds API URLs like:
 `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/[component]/`
 
 When `VITE_CODESPACE_NAME` is not set, the app uses a safe fallback base URL (`/api`) to avoid invalid URLs such as `https://undefined-8000.app.github.dev/...`.
+
+For local development, Vite proxies `/api` to `http://localhost:8000`.

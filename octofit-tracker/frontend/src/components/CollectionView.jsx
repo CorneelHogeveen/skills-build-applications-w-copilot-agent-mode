@@ -64,6 +64,14 @@ export default function CollectionView({ title, resourcePath, emptyLabel }) {
           throw new Error(`API request failed with status ${response.status}`);
         }
 
+        const contentType = response.headers.get('content-type') || '';
+        if (!contentType.includes('application/json')) {
+          const preview = (await response.text()).slice(0, 80);
+          throw new Error(
+            `Expected JSON from ${endpoint}, received ${contentType || 'unknown content type'} (${preview})`
+          );
+        }
+
         const payload = await response.json();
         const normalized = normalizeCollectionResponse(payload);
         setItems(normalized.items);
