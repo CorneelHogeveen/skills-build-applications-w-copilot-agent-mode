@@ -7,7 +7,7 @@ import { UserModel } from './models/User';
 import { WorkoutModel } from './models/Workout';
 
 const app = express();
-const port = Number(process.env.PORT) || 8000;
+const port = 8000;
 const mongoUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/octofit_db';
 
 // Middleware
@@ -28,10 +28,10 @@ app.get('/api/health', (_req: Request, res: Response) => {
 
 // API Base URL helper - Codespaces-aware
 function getApiBaseUrl(): string {
-  if (process.env.CODESPACE_NAME) {
-    return `https://${process.env.CODESPACE_NAME}-8000.app.github.dev`;
-  }
-  return `http://localhost:${port}`;
+  const codespaceName = process.env.CODESPACE_NAME;
+  return codespaceName
+    ? `https://${codespaceName}-8000.app.github.dev`
+    : `http://localhost:${port}`;
 }
 
 app.get('/api/config', (_req: Request, res: Response) => {
