@@ -1,22 +1,4 @@
-const rawCodespaceName = import.meta.env.VITE_CODESPACE_NAME;
-const codespaceName = typeof rawCodespaceName === 'string' ? rawCodespaceName.trim() : '';
-
-export const apiBaseUrl = codespaceName
-  ? `https://${codespaceName}-8000.app.github.dev/api`
-  : '/api';
-
-export const isCodespaceNameConfigured = Boolean(codespaceName);
-
-export function resolveEndpointUrl(endpointPath) {
-  const normalizedPath = String(endpointPath || '').replace(/\/+/g, '/');
-  const ensuredPath = normalizedPath.startsWith('/') ? normalizedPath : `/${normalizedPath}`;
-
-  if (isCodespaceNameConfigured) {
-    return `${apiBaseUrl}${ensuredPath.replace(/^\/api/, '')}`;
-  }
-
-  return ensuredPath;
-}
+export const isCodespaceNameConfigured = Boolean(import.meta.env.VITE_CODESPACE_NAME?.trim());
 
 export function normalizeCollectionResponse(payload) {
   if (Array.isArray(payload)) {
